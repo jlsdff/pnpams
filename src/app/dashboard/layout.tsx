@@ -1,53 +1,71 @@
-'use client'
+/** @format */
 
-import Navigation from "@/components/navigation/Navigation"
-import Link from "next/link"
+"use client";
+
+import Navigation from "@/components/navigation/Navigation";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import styles from "./dashboard.module.css";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import { ThemeProvider } from "react-bootstrap";
 
 type Props = {
-    children: React.ReactNode
-}
+    children: React.ReactNode;
+};
 
-export default function DashboardLayout({children}:Props){
-
+export default function DashboardLayout({ children }: Props) {
     const sidebarLinks = [
-        "/dashboard",
         "/dashboard/officers",
         "/dashboard/records",
-        "/attendance"
-    ]
+        "/attendance",
+    ];
 
     const pathname = usePathname();
-    console.log(pathname)
-    return (
-        <>
-        <Navigation/>
-        <aside>
-            {
-                sidebarLinks.map((link, index) => {
-                    const isActive = pathname.startsWith(link);
 
-                    return (
-                        <>
-                        <Link
-                            style={{
-                                color: isActive ? "blue" : "white"
-                            }}
-                            href={link}
-                            key={index}
-                        >
-                            {link.replace("/dashboard/", "").replace("/", '')}
-                        </Link>
-                        <br />
-                        </>
-                    )
-                })
-            }
-            
-        </aside>
-        <main>
-            {children}
-        </main>
-        </>
-    )
+    return (
+        <ThemeProvider
+            breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]}
+            minBreakpoint="xxs"
+        >
+            <Container className={`${styles.container}`} fluid>
+                <Row>
+                    <Col>
+                        <Navigation />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col >
+                        <aside>
+                            {sidebarLinks.map((link, index) => {
+                                const isActive = pathname === link;
+
+                                return (
+                                    <div key={index}>
+                                        <Link
+                                            style={{
+                                                color: isActive
+                                                    ? "blue"
+                                                    : "black",
+                                            }}
+                                            href={link}
+                                        >
+                                            {link
+                                                .replace("/dashboard/", "")
+                                                .replace("/", "")}
+                                        </Link>
+                                        <br />
+                                    </div>
+                                );
+                            })}
+                        </aside>
+                    </Col>
+                    <Col md={10} >
+                        <main>{children}</main>
+                    </Col>
+                </Row>
+            </Container>
+        </ThemeProvider>
+    );
 }
