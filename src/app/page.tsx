@@ -1,8 +1,13 @@
 import Image from 'next/image'
 import styles from './page.module.css'
+import Head from 'next/head'
 
 export default function Home() {
   return (
+    <>
+    <Head>
+      <title>Home</title>
+    </Head>
     <main className={styles.main}>
       <div className={styles.description}>
         <p>
@@ -91,5 +96,6 @@ export default function Home() {
         </a>
       </div>
     </main>
+    </>
   )
 }
