@@ -4,13 +4,3 @@
   justify-content: center;
   align-items: center;
 }
-.form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 300px;
-  height: 300px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}

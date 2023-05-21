@@ -12,35 +12,55 @@ export default function FilterButtonGroup({
     activeFilter,
 }: Props): JSX.Element {
     return (
+        <>
+        <h6>Get Records By: </h6>
         <ButtonGroup aria-label="Basic example">
+            
             <Button
-                variant={activeFilter === "daily" ? "link" : "light"}
+                variant={
+                    activeFilter === "daily"
+                        ? "outline-primary"
+                        : "outline-secondary"
+                }
                 onClick={handleFilter}
                 name="daily"
             >
                 Daily
             </Button>
             <Button
-                variant={activeFilter === "weekly" ? "link" : "light"}
+                variant={
+                    activeFilter === "weekly"
+                        ? "outline-primary"
+                        : "outline-secondary"
+                }
                 onClick={handleFilter}
                 name="weekly"
             >
                 Weekly
             </Button>
             <Button
-                variant={activeFilter === "monthly" ? "link" : "light"}
+                variant={
+                    activeFilter === "monthly"
+                        ? "outline-primary"
+                        : "outline-secondary"
+                }
                 onClick={handleFilter}
                 name="monthly"
             >
                 Monthly
             </Button>
             <Button
-                variant={activeFilter === "annualy" ? "link" : "light"}
+                variant={
+                    activeFilter === "annualy"
+                        ? "outline-primary"
+                        : "outline-secondary"
+                }
                 onClick={handleFilter}
                 name="annualy"
             >
                 Annualy
             </Button>
         </ButtonGroup>
+        </>
     );
 }

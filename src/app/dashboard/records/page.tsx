@@ -42,18 +42,19 @@ export const metadata: Metadata = {
     description: "Records of officer's attendance",
 };
 
-
 export default function Records() {
-
     const [records, setRecords] = useState<Record[]>([]);
 
     const [month, day, year] = new Date()
-            .toLocaleDateString("en-US")
-            .split("/");
-    
-    useEffect(() => {
+        .toLocaleDateString("en-US")
+        .split("/");
 
-        console.log(year, month, day)
+    const [title, setTitle] = useState<string>(
+        "Records for today, " + new Date().toLocaleDateString()
+    );
+
+    useEffect(() => {
+        console.log(year, month, day);
 
         const config = {
             url: "http://localhost:8080/api/v1/record",
@@ -64,9 +65,9 @@ export default function Records() {
             params: {
                 year,
                 month,
-                day
-            }
-        }
+                day,
+            },
+        };
 
         const data = axios
             .request(config)
@@ -85,12 +86,12 @@ export default function Records() {
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>Filters</Accordion.Header>
                     <Accordion.Body>
-                        <Filter setRecords={setRecords} />
+                        <Filter setRecords={setRecords} setTitle={setTitle} />
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
             <br />
-            <h6>Records for {new Date().toLocaleDateString()}</h6>
+            <h6 className="text-secondary" >{title}</h6>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -105,25 +106,33 @@ export default function Records() {
                     </tr>
                 </thead>
                 <tbody>
-                    {records?.map((record, index) => {
-                        return (
-                            <TableRow
-                                key={record.recordId}
-                                id={record.officer.badgeNumber}
-                                firstName={record.officer.firstName}
-                                lastName={record.officer.lastName}
-                                middleName={record.officer.middleName}
-                                date={record.date}
-                                timeIn={record.timeIn}
-                                timeOut={record.timeOut}
-                            />
-                        );
-                    })}
-                    {   
-                        records.length === 0 && <tr><td colSpan={8} className="text-center">No records found</td></tr>
-                    }
+                    {records
+                        ?.map((record, index) => {
+                            return (
+                                <TableRow
+                                    key={record.recordId}
+                                    id={record.officer.badgeNumber}
+                                    firstName={record.officer.firstName}
+                                    lastName={record.officer.lastName}
+                                    middleName={record.officer.middleName}
+                                    date={record.date}
+                                    timeIn={record.timeIn}
+                                    timeOut={record.timeOut}
+                                />
+                            );
+                        })
+                        .sort((a, b) => {
+                            return a.props.id - b.props.id;
+                        })}
+                    {records.length === 0 && (
+                        <tr>
+                            <td colSpan={8} className="text-center text-danger">
+                                No records found
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
-            </Table>
+            </Table> 
         </>
     );
 }

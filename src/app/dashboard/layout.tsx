@@ -34,21 +34,21 @@ export default function DashboardLayout({ children }: Props) {
                     <Col>
                         <Navigation />
                     </Col>
-                </Row>
-                <Row>
-                    <Col >
-                        <aside>
+                </Row> 
+                <Row className={`h-100 ${styles.second} min-vh-100`}>
+                    <Col className="">
+                        <aside className="">
                             {sidebarLinks.map((link, index) => {
                                 const isActive = pathname === link;
-
                                 return (
                                     <div key={index}>
                                         <Link
                                             style={{
                                                 color: isActive
                                                     ? "blue"
-                                                    : "black",
+                                                    : "gray",
                                             }}
+                                            className="fs-5 fw-normal"
                                             href={link}
                                         >
                                             {link
@@ -61,7 +61,7 @@ export default function DashboardLayout({ children }: Props) {
                             })}
                         </aside>
                     </Col>
-                    <Col md={10} >
+                    <Col md={10}>
                         <main>{children}</main>
                     </Col>
                 </Row>
