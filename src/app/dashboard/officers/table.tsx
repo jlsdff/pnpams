@@ -1,62 +1,95 @@
 /** @format */
 
-import { useMemo } from "react";
-import { Column, useTable } from "react-table";
+import axios from "axios";
+import { useEffect, useMemo, useState } from "react";
+import { Button, Table } from "react-bootstrap";
+import { Column, Row, useTable, useSortBy } from "react-table";
+import { columns as impericalColumn } from "./tableColumns";
+import Head from "next/head";
 
 export default function OfficerTable() {
-    const data = useMemo(
-        () => [
-            {
-                badgeNumber: 1,
-                firstName: "John",
-                lastName: "Doe",
-            },
-            {
-                badgeNumber: 2,
-                firstName: "Jane",
-                lastName: "Doe",
-            },
-        ],
-        []
-    );
+    const [data, setData] = useState([]);
 
-    const columns: any = useMemo(
-        () => [
-            {
-                Header: "Badge Number",
-                accessor: "badgeNumber",
-            },
-            {
-                Header: "First Name",
-                accessor: "firstName",
-            },
-            {
-                Header: "Last Name",
-                accessor: "lastName",
-            },
-        ],
-        []
-    );
+    useEffect(() => {
+        const config = {
+            url: "http://localhost:8080/api/v1/officer/all",
+            method: "GET",
+        };
+        axios
+            .request(config)
+            .then((res) => setData(res.data))
+            .catch((err) => console.log(err));
+    }, []);
+
+    const tableColumns = useMemo(() => {
+        return impericalColumn;
+    }, []);
+
+    const tableData: any = useMemo(() => {
+        return data.map((officer: any) => {
+            return {
+                badgeNumber: officer.badgeNumber,
+                firstName: officer.firstName,
+                lastName: officer.lastName,
+                middleName: officer.middleName,
+                dutyOn: officer.dutyOn,
+                dutyOut: officer.dutyOut,
+                ranks: officer.ranks,
+            };
+        });
+    }, [data]);
+
+    const tableHooks = (hooks: any) => {
+        hooks.visibleColumns.push((col: any) => {
+            return [
+                ...col,
+                {
+                    id: "actions",
+                    Header: "Actions",
+                    Cell: ({ row }: any) => {
+                        return (
+                            <Button
+                                size="sm"
+                                onClick={() =>
+                                    alert(
+                                        "getting record of " +
+                                            row.values.lastName
+                                    )
+                                }
+                            >
+                                Get Record
+                            </Button>
+                        );
+                    },
+                },
+            ];
+        });
+    };
 
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-        useTable({ columns, data });
+        useTable(
+            { columns: tableColumns, data: tableData },
+            tableHooks,
+            useSortBy
+        );
 
     return (
-        <table {...getTableProps} style={{ border: "solid 1px blue" }}>
+        <Table striped bordered hover {...getTableProps}>
             <thead>
                 {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map((col) => (
                             <th
-                                {...col.getHeaderProps}
-                                style={{
-                                    borderBottom: "solid 3px red",
-                                    background: "aliceblue",
-                                    color: "black",
-                                    fontWeight: "bold",
-                                }}
+                                {...col.getHeaderProps(
+                                    col.getSortByToggleProps()
+                                )}
                             >
                                 {col.render("Header")}
+                                {col.isSorted
+                                    ? col.isSortedDesc
+                                        ? " ▼"
+                                        : " ▲"
+                                    : ""}
                             </th>
                         ))}
                     </tr>
@@ -69,14 +102,7 @@ export default function OfficerTable() {
                         <tr {...row.getRowProps()}>
                             {row.cells.map((cell) => {
                                 return (
-                                    <td
-                                        {...cell.getCellProps()}
-                                        style={{
-                                            padding: "10px",
-                                            border: "solid 1px gray",
-                                            background: "papayawhip",
-                                        }}
-                                    >
+                                    <td {...cell.getCellProps()}>
                                         {cell.render("Cell")}
                                     </td>
                                 );
@@ -85,6 +111,6 @@ export default function OfficerTable() {
                     );
                 })}
             </tbody>
-        </table>
+        </Table>
     );
 }

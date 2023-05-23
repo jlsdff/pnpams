@@ -21,8 +21,8 @@ export default function Home() {
             url: "http://localhost:8080/api/v1/admin/login",
             method: "GET",
             params: {
-                email: adminObj.email,
-                password: adminObj.password,
+                email: adminObj?.email,
+                password: adminObj?.password,
             },
         };
 
