@@ -1,0 +1,10 @@
+.logo {
+    width: 75px;
+    aspect-ratio: 1/1;
+    object-fit: contain;
+}
+.profileIcon {
+    width: 25px;
+    aspect-ratio: 1/1;
+    object-fit: contain;
+}
