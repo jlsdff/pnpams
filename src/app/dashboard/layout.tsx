@@ -31,30 +31,47 @@ export default function DashboardLayout({ children }: Props) {
             <div className={`${styles.mainContainer} `}>
                 <aside className="p-4 border-end">
                     <Link href="/attendance">
-                        <Button variant="primary">Take Attendance</Button>
+                        <Button variant="outline-primary" size="sm" className="mb-2 fs-6 fw-normal">
+                            <img
+                                src="/images/attendance.svg"
+                                alt=""
+                                className="me-1"
+                            />
+                            <span>Take Attendance</span>
+                        </Button>
                     </Link>
-                    {sidebarLinks.map((link, index) => {
-                        const isActive = pathname === link;
-                        return (
-                            <div key={index} className={`${styles.links}`}>
-                                <Link className="" href={link}>
-                                    <Button
-                                        className="mb-2 fs-5 fw-normal"
-                                        size="lg"
-                                        variant="link"
-                                        style={{
-                                            color: isActive ? "blue" : "gray",
-                                        }}
-                                    >
-                                        {link
-                                            .replace("/dashboard/", "")
-                                            .replace("/", "")}
-                                    </Button>
-                                </Link>
-                                <br />
-                            </div>
-                        );
-                    })}
+                    <Link href={"/dashboard/officers"} className="d-grid gap-2">
+                        <Button
+                            className="mb-2 fs-6 fw-normal"
+                            size="sm"
+                            variant="link"
+                            style={{
+                                color:
+                                    pathname === "/dashboard/officers"
+                                        ? "blue"
+                                        : "gray",
+                            }}
+                        >
+                            <img src="/images/officer.svg" alt="" />
+                            <span>Officers</span>
+                        </Button>
+                    </Link>
+                    <Link href={"/dashboard/records"} className="d-grid gap-2">
+                        <Button
+                            className="mb-2 fs-6 fw-normal"
+                            size="sm"
+                            variant="link"
+                            style={{
+                                color:
+                                    pathname === "/dashboard/records"
+                                        ? "blue"
+                                        : "gray",
+                            }}
+                        >
+                            <img src="/images/records.svg" alt="" />
+                            <span>Records</span>
+                        </Button>
+                    </Link>
                 </aside>
                 <main className="p-4">{children}</main>
             </div>
