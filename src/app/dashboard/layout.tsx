@@ -29,7 +29,7 @@ export default function DashboardLayout({ children }: Props) {
                 <Navigation />
             </header>
             <div className={`${styles.mainContainer} `}>
-                <aside className="p-4 border-end" style={{background: "#4f7491"}}>
+                <aside className="p-4 border-end">
                     <Link href="/attendance">
                         <Button variant="primary">Take Attendance</Button>
                     </Link>
