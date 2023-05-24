@@ -31,7 +31,11 @@ export default function DashboardLayout({ children }: Props) {
             <div className={`${styles.mainContainer} `}>
                 <aside className="p-4 border-end">
                     <Link href="/attendance">
-                        <Button variant="outline-primary" size="sm" className="mb-2 fs-6 fw-normal">
+                        <Button
+                            variant="outline-primary"
+                            size="sm"
+                            className={`mb-2 fs-6 fw-normal ${styles.takeAttendanceButton}`}
+                        >
                             <img
                                 src="/images/attendance.svg"
                                 alt=""
@@ -52,7 +56,11 @@ export default function DashboardLayout({ children }: Props) {
                                         : "gray",
                             }}
                         >
-                            <img src="/images/officer.svg" alt="" />
+                            <img
+                                src="/images/officer.svg"
+                                alt=""
+                                className="me-1"
+                            />
                             <span>Officers</span>
                         </Button>
                     </Link>
@@ -68,7 +76,11 @@ export default function DashboardLayout({ children }: Props) {
                                         : "gray",
                             }}
                         >
-                            <img src="/images/records.svg" alt="" />
+                            <img
+                                src="/images/records.svg"
+                                alt=""
+                                className="me-1"
+                            />
                             <span>Records</span>
                         </Button>
                     </Link>
