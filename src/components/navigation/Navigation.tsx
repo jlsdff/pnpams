@@ -23,7 +23,7 @@ export default function Navigation({}) {
                         alt=""
                         className={`${styles.logo}`}
                     />
-                    <span>P.N.P. Attendance Monitoring System</span>
+                    <span>MPD Sta. Mesa Attendance Monitoring System</span>
                 </Navbar.Brand>
                 <Dropdown align="end">
                     <Dropdown.Toggle variant="light" id="dropdown-basic">
