@@ -3,7 +3,7 @@
 import axios from "axios";
 import { AnyARecord } from "dns";
 import { useRef, useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 
 type Props = {
     setRecords: (records: any) => void;
@@ -32,25 +32,25 @@ export default function WeeklyForm({
 
         setDate(target.value);
 
-        if(typeof(startDate) === 'string'  || startDate === ""){
+        if (typeof startDate === "string" || startDate === "") {
             setError("");
             return;
         }
-
-
-        
     }
 
     function handleGetRecords(e: any) {
         e.preventDefault();
 
-        const dateStart:Date = new Date(startDate!);
+        const dateStart: Date = new Date(startDate!);
 
-        const [yearStart, monthStart, dayStart] = dateStart.toISOString().split("T")[0].split("-") as string[];
+        const [yearStart, monthStart, dayStart] = dateStart
+            .toISOString()
+            .split("T")[0]
+            .split("-") as string[];
 
-        console.log(yearStart, monthStart, dayStart)
+        console.log(yearStart, monthStart, dayStart);
 
-        if(startDate === null || startDate === undefined || startDate === ""){
+        if (startDate === null || startDate === undefined || startDate === "") {
             setError("Invalid date");
             return;
         }
@@ -63,16 +63,17 @@ export default function WeeklyForm({
                 day: Number.parseInt(dayStart),
                 year: Number.parseInt(yearStart),
             },
-        }
+        };
 
-        axios.request(config)
-        .then((response) => {
-            setRecords(response.data);
-            console.log(response.data)
-        })
-        .catch((error) => {
-            console.log(error);
-        })
+        axios
+            .request(config)
+            .then((response) => {
+                setRecords(response.data);
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
         setTitle(
             "Records for " +
@@ -81,7 +82,8 @@ export default function WeeklyForm({
                     year: "numeric",
                     month: "long",
                     day: "numeric",
-                }) + " to " +
+                }) +
+                " to " +
                 new Date(endDate.current!.value).toLocaleDateString("en-US", {
                     weekday: "long",
                     year: "numeric",
@@ -91,32 +93,39 @@ export default function WeeklyForm({
         );
 
         setError("");
-
     }
 
     return (
         <div>
-            <Form >
-                <Form.Group className="mb-2 mt-4">
-                    <Form.Label>Start Date</Form.Label>
-                    <Form.Control
-                        type="date"
-                        size="sm"
-                        onChange={handleChangeDate}
-                    />
-                    <Form.Text className="text-danger" >{error!}</Form.Text>
-                </Form.Group>
+            <Form>
+                <Row>
+                    <Col>
+                        <Form.Group className="mb-2 mt-4">
+                            <Form.Label>Start Date</Form.Label>
+                            <Form.Control
+                                type="date"
+                                size="sm"
+                                onChange={handleChangeDate}
+                            />
+                            <Form.Text className="text-danger">
+                                {error!}
+                            </Form.Text>
+                        </Form.Group>
+                    </Col>
 
-                <Form.Group className="mb-4">
-                    <Form.Label>End Date</Form.Label>
-                    <Form.Control
-                        type="date"
-                        size="sm"
-                        ref={endDate}
-                        disabled
-                        readOnly
-                    />
-                </Form.Group>
+                    <Col>
+                        <Form.Group className="mb-4 mt-4">
+                            <Form.Label>End Date</Form.Label>
+                            <Form.Control
+                                type="date"
+                                size="sm"
+                                ref={endDate}
+                                disabled
+                                readOnly
+                            />
+                        </Form.Group>
+                    </Col>
+                </Row>
 
                 <Form.Group>
                     <Button

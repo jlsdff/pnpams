@@ -6,6 +6,7 @@ import { Form, Button } from "react-bootstrap";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Home() {
     const emailRef = useRef<HTMLInputElement>(null);
@@ -73,8 +74,16 @@ export default function Home() {
             <main className={`${styles.main}`}>
                 <Form
                     onSubmit={handleLogin}
-                    className="p-4 border border-1 border-secondary rounded"
+                    className="p-4 border border-1 border-secondary rounded shadow bg-white "
                 >
+                    <div className="d-flex justify-content-center align-item-center">
+                        <Image
+                            src={"/images/PNP-Logo.png"}
+                            alt="pnp logo"
+                            width={240}
+                            height={150}
+                        />
+                    </div>
                     <Form.Group className="mb-2">
                         <Form.Label>Email</Form.Label>
                         <Form.Control

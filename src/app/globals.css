@@ -1,36 +1,44 @@
+/** @format */
+
 :root {
-
-  --fw-regu: 400;
-  --fw-bold: 700;
-
+    --fw-regu: 400;
+    --fw-bold: 700;
 }
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    overflow-x: hidden;
 }
 a {
-  text-decoration: none;
-  color: inherit;
+    text-decoration: none;
+    color: inherit;
 }
-h1, .h1 {
-  font-size: 67px;
+h1,
+.h1 {
+    font-size: 67px;
 }
-h2, .h2 {
-  font-size: 50px;
+h2,
+.h2 {
+    font-size: 50px;
 }
-h3, .h3 {
-  font-size: 37px;
+h3,
+.h3 {
+    font-size: 37px;
 }
-h4, .h4 {
-  font-size: 28px;
+h4,
+.h4 {
+    font-size: 28px;
 }
-h5, .h5 {
-  font-size: 21px;
+h5,
+.h5 {
+    font-size: 21px;
 }
 p {
-  font-size: 16px;
+    font-size: 16px;
 }
 .p2 {
-  font-size: 12px;
+    font-size: 12px;
 }

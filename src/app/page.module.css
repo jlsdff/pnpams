@@ -3,4 +3,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url('/images/pnp-facade.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }

@@ -3,9 +3,11 @@
 import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
 import { Button, Table } from "react-bootstrap";
-import { Column, Row, useTable, useSortBy } from "react-table";
+import { Column, Row, useTable, useSortBy, useGlobalFilter } from "react-table";
 import { columns as impericalColumn } from "./tableColumns";
 import Head from "next/head";
+import GlobalFilter from "./globalFilter";
+import styles from "./table.module.css";
 
 export default function OfficerTable() {
     const [data, setData] = useState([]);
@@ -66,51 +68,70 @@ export default function OfficerTable() {
         });
     };
 
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-        useTable(
-            { columns: tableColumns, data: tableData },
-            tableHooks,
-            useSortBy
-        );
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow,
+        preGlobalFilteredRows,
+        setGlobalFilter,
+        state,
+    } = useTable(
+        { columns: tableColumns, data: tableData },
+        useGlobalFilter,
+        tableHooks,
+        useSortBy
+    );
 
     return (
-        <Table striped bordered hover {...getTableProps}>
-            <thead>
-                {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map((col) => (
-                            <th
-                                {...col.getHeaderProps(
-                                    col.getSortByToggleProps()
-                                )}
-                            >
-                                {col.render("Header")}
-                                {col.isSorted
-                                    ? col.isSortedDesc
-                                        ? " ▼"
-                                        : " ▲"
-                                    : ""}
-                            </th>
+        <>
+            <GlobalFilter
+                preGlobalFilteredRows={preGlobalFilteredRows}
+                setGlobalFilter={setGlobalFilter}
+                globalFilter={state.globalFilter}
+            />
+            <div className={`${styles.tableFixHead}`}>
+                <Table striped bordered hover {...getTableProps}>
+                    <thead>
+                        {headerGroups.map((headerGroup) => (
+                            <tr {...headerGroup.getHeaderGroupProps()}>
+                                {headerGroup.headers.map((col) => (
+                                    <th
+                                        className="text-center"
+                                        {...col.getHeaderProps(
+                                            col.getSortByToggleProps()
+                                        )}
+                                    >
+                                        {col.render("Header")}
+                                        {col.isSorted
+                                            ? col.isSortedDesc
+                                                ? " ▼"
+                                                : " ▲"
+                                            : ""}
+                                    </th>
+                                ))}
+                            </tr>
                         ))}
-                    </tr>
-                ))}
-            </thead>
-            <tbody {...getTableBodyProps}>
-                {rows.map((row) => {
-                    prepareRow(row);
-                    return (
-                        <tr {...row.getRowProps()}>
-                            {row.cells.map((cell) => {
-                                return (
-                                    <td {...cell.getCellProps()}>
-                                        {cell.render("Cell")}
-                                    </td>
-                                );
-                            })}
-                        </tr>
-                    );
-                })}
-            </tbody>
-        </Table>
+                    </thead>
+                    <tbody {...getTableBodyProps}>
+                        {rows.map((row) => {
+                            prepareRow(row);
+                            return (
+                                <tr {...row.getRowProps()}>
+                                    {row.cells.map((cell) => {
+                                        return (
+                                            <td className="text-left" {...cell.getCellProps()}>
+                                                {cell.render("Cell")}
+                                            </td>
+                                        );
+                                    })}
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </Table>
+            </div>
+        </>
     );
 }

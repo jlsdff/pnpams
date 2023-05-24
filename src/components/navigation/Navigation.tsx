@@ -1,5 +1,9 @@
-export default function Navigation({}){
+/** @format */
+
+export default function Navigation({}) {
     return (
-        <h1>Navigation</h1>
-    )
+        <nav>
+            <h1>Navigation</h1>
+        </nav>
+    );
 }
