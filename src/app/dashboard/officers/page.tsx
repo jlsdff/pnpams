@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { isAwaitExpression } from "typescript";
 import axios from "axios";
 import OfficerTable from "./table";
+import { Metadata } from "next";
 
 type Officer = {
     badgeNumber: number;
@@ -18,6 +19,11 @@ type Officer = {
     dutyOut: Date;
     ranks: string;
 };
+
+export const metadata: Metadata = {
+    title: "Officers",
+    description: "Officers of MPD Sta. Mesa",
+}
 
 export default function Officer() {
     const [officers, setOfficers] = useState<Officer[]>([]);

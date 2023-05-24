@@ -7,6 +7,14 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+    title: "Login",
+    description: "Login to the system"
+}
+
 
 export default function Home() {
     const emailRef = useRef<HTMLInputElement>(null);

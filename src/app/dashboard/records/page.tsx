@@ -9,6 +9,7 @@ import Filter from "./filter";
 import axios from "axios";
 import TableRow from "./recordTableRow";
 import { Metadata } from "next";
+import RecordTable from "./table";
 
 type Record = {
     recordId: number;
@@ -75,7 +76,7 @@ export default function Records() {
                 setRecords(response.data);
             })
             .catch((error) => {
-                console.log(error);
+                console.error(error);
             });
     }, []);
 
@@ -91,47 +92,7 @@ export default function Records() {
             </Accordion>
             <br />
             <h6 className="text-secondary" >{title}</h6>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>M.I</th>
-                        <th>Date</th>
-                        <th>Time In</th>
-                        <th>Time Out</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {records
-                        ?.map((record, index) => {
-                            return (
-                                <TableRow
-                                    key={record.recordId}
-                                    id={record.officer.badgeNumber}
-                                    firstName={record.officer.firstName}
-                                    lastName={record.officer.lastName}
-                                    middleName={record.officer.middleName}
-                                    date={record.date}
-                                    timeIn={record.timeIn}
-                                    timeOut={record.timeOut}
-                                />
-                            );
-                        })
-                        .sort((a, b) => {
-                            return a.props.id - b.props.id;
-                        })}
-                    {records.length === 0 && (
-                        <tr>
-                            <td colSpan={8} className="text-center text-danger">
-                                No records found
-                            </td>
-                        </tr>
-                    )}
-                </tbody>
-            </Table> 
+            <RecordTable data={records} setData={setRecords} />
         </>
     );
 }
