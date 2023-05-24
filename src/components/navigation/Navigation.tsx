@@ -1,11 +1,18 @@
 /** @format */
 import { Container, Navbar, Dropdown, Button } from "react-bootstrap";
 import styles from "./navigation.module.css";
+import { useRouter } from "next/navigation";
 
 export default function Navigation({}) {
-    const admin = JSON.parse(sessionStorage.getItem("admin") || "{}");
 
-    function handleLogout() {}
+    const admin = JSON.parse(sessionStorage.getItem("admin") || "{}");
+    const router = useRouter();
+
+
+    function handleLogout() {
+        sessionStorage.clear();
+        router.push("/");
+    }
 
     return (
         <Navbar>
