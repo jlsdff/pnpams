@@ -1,14 +1,13 @@
 /** @format */
 
 import { useState } from "react";
-import { useAsyncDebounce } from "react-table";
+import { Form, Row, Col, Button } from "react-bootstrap";
 
 export default function GlobalFilter({
     preGlobalFilteredRows,
     globalFilter,
     setGlobalFilter,
 }: any) {
-
     const count = preGlobalFilteredRows.length;
 
     const [value, setValue] = useState(globalFilter);
@@ -22,20 +21,24 @@ export default function GlobalFilter({
     };
 
     return (
-        <span>
-            Search:{" "}
-            <input
-                value={value || ""}
-                onChange={(e) => {
-                    setValue(e.target.value);
-                    onChange(e.target.value);
-                }}
-                placeholder={`${count} records...`}
-                style={{
-                    fontSize: "1.1rem",
-                    border: "0",
-                }}
-            />
-        </span>
+        <>
+            <Row>
+                <Col  >
+                    <Form.Control
+                        size="lg"
+                        type="text"
+                        placeholder="Search..."
+                        onChange={(e) => {
+                            setValue(e.target.value);
+                            onChange(e.target.value);
+                        }}
+                        className="mb-3"
+                    />
+                </Col>
+                {/* <Col md={2}>
+                    <Button size="sm">Get Officer List</Button>
+                </Col> */}
+            </Row>
+        </>
     );
 }

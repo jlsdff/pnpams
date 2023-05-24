@@ -81,7 +81,6 @@ export default function Records() {
 
     return (
         <>
-            <h1>Records</h1>
             <Accordion>
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>Filters</Accordion.Header>
