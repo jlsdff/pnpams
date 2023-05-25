@@ -1,14 +1,16 @@
 /** @format */
+import AttendanceMain from "./main";
+import { Metadata } from "next";
 
-import Link from "next/link";
+export const config: Metadata = {
+    title: "Attendance",
+    description: "Attendance page",
+}
 
 export default function Attendance() {
     return (
         <>
-            <h1>Attendance</h1>
-            <Link href="/dashboard/records">
-                dashboard
-            </Link>
+            <AttendanceMain />
         </>
     );
 }
