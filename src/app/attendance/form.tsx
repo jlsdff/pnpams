@@ -18,18 +18,23 @@ export default function LoginForm({
             gap={3}
             className={`d-flex justify-content-center align-items-center ${styles.stack}`}
         >
-            <Form onSubmit={handleSubmit} className="p-4 rounded">
+            <Form
+                onSubmit={handleSubmit}
+                className="p-4 border rounded bg-light bg-opacity-10"
+            >
                 <img
                     src="/images/PNP-Logo.png"
                     alt=""
                     className={`${styles.logo}`}
                 />
                 <Form.Group>
-                    <Form.Label className="text-light">
+                    <Form.Label className="text-dark">
                         Enter your badge number:{" "}
                     </Form.Label>
                     <Form.Control type="number" ref={badgeNumberRef} required />
-                    <Form.Text className="text-light">{error!}</Form.Text>
+                    <Form.Text className="text-danger fw-bold">
+                        {error!}
+                    </Form.Text>
                 </Form.Group>
                 <div className="d-grid gap-2">
                     <Button variant="primary" className="mt-4" type="submit">

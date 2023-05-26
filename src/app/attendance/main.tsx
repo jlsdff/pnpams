@@ -20,7 +20,6 @@ export default function AttendanceMain() {
         e.preventDefault();
 
         const date = new Date();
-        const dateSQL = date.toLocaleDateString().split("/").join("-");
         const config = {
             url: "http://localhost:8080/api/v1/record",
             method: "POST",
