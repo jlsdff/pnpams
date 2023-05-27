@@ -29,13 +29,28 @@ export default function OfficerTable() {
 
     const tableData: any = useMemo(() => {
         return data.map((officer: any) => {
+            const dutyOn = new Date(
+                `2023-01-01T${officer.dutyOn}`
+            ).toLocaleTimeString("en-US", {
+                hour12: true,
+                hour: "numeric",
+                minute: "numeric",
+            });
+            const dutyOut = new Date(
+                `2023-01-01T${officer.dutyOut}`
+            ).toLocaleTimeString("en-US", {
+                hour12: true,
+                hour: "numeric",
+                minute: "numeric",
+            });
+
             return {
                 badgeNumber: officer.badgeNumber,
                 firstName: officer.firstName,
                 lastName: officer.lastName,
                 middleName: officer.middleName,
-                dutyOn: officer.dutyOn,
-                dutyOut: officer.dutyOut,
+                dutyOn: dutyOn,
+                dutyOut: dutyOut,
                 ranks: officer.ranks,
             };
         });
@@ -121,7 +136,10 @@ export default function OfficerTable() {
                                 <tr {...row.getRowProps()}>
                                     {row.cells.map((cell) => {
                                         return (
-                                            <td className="text-left" {...cell.getCellProps()}>
+                                            <td
+                                                className="text-left"
+                                                {...cell.getCellProps()}
+                                            >
                                                 {cell.render("Cell")}
                                             </td>
                                         );
