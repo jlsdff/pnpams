@@ -9,6 +9,7 @@ import { isAwaitExpression } from "typescript";
 import axios from "axios";
 import OfficerTable from "./table";
 import { Metadata } from "next";
+import AddOfficerModal from "./AddOfficerModal";
 
 type Officer = {
     badgeNumber: number;
@@ -23,28 +24,33 @@ type Officer = {
 export const metadata: Metadata = {
     title: "Officers",
     description: "Officers of MPD Sta. Mesa",
-}
+};
 
 export default function Officer() {
-    const [officers, setOfficers] = useState<Officer[]>([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [officer, setOfficer] = useState<Officer | null>(null);
 
-    useEffect(() => {
-        const config = {
-            url: "http://localhost:8080/api/v1/officer/all",
-            method: "GET",
-        };
-
-        axios
-            .request(config)
-            .then((res) => {
-                setOfficers(res.data);
-            })
-            .catch((err) => console.error(err));
-    }, []);
+    function openModal(officer: Officer) {
+        if (officer) {
+            setOfficer(officer);
+        }else {
+            setOfficer(null);
+        }
+        setIsModalOpen(true);
+    }
+    function closeModal() {
+        setIsModalOpen(false);
+    }
 
     return (
         <>
-            <OfficerTable/>
+            {isModalOpen && (
+                <AddOfficerModal
+                    closeModal={closeModal}
+                    officerData={officer}
+                />
+            )}
+            <OfficerTable openModal={openModal} />
         </>
     );
 }

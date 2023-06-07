@@ -4,12 +4,23 @@
 
 import { useEffect, useRef, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
-import { Table } from "react-bootstrap";
+import {
+    Container,
+    Table,
+    Row,
+    Col,
+    Button,
+    ButtonGroup,
+    ToggleButton,
+} from "react-bootstrap";
 import Filter from "./filter";
 import axios from "axios";
 import TableRow from "./recordTableRow";
 import { Metadata } from "next";
 import RecordTable from "./table";
+import styles from "./records.module.css";
+import NewRecord from "./NewRecord";
+import ExportButton from "../../../components/export/ExportToExcel";
 
 type Record = {
     recordId: number;
@@ -45,6 +56,7 @@ export const metadata: Metadata = {
 
 export default function Records() {
     const [records, setRecords] = useState<Record[]>([]);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     const [month, day, year] = new Date()
         .toLocaleDateString("en-US")
@@ -80,18 +92,56 @@ export default function Records() {
             });
     }, []);
 
+    function addRecord() {
+        setIsModalOpen((prev) => !prev);
+    }
+
     return (
         <>
-            <Accordion>
-                <Accordion.Item eventKey="0">
-                    <Accordion.Header>Filters</Accordion.Header>
-                    <Accordion.Body>
-                        <Filter setRecords={setRecords} setTitle={setTitle} />
-                    </Accordion.Body>
-                </Accordion.Item>
-            </Accordion>
+            {isModalOpen ? (
+                <NewRecord />
+            ) : (
+                <Accordion>
+                    <Accordion.Item eventKey="0">
+                        <Accordion.Header>Filters</Accordion.Header>
+                        <Accordion.Body>
+                            <Filter
+                                setRecords={setRecords}
+                                setTitle={setTitle}
+                            />
+                        </Accordion.Body>
+                    </Accordion.Item>
+                </Accordion>
+            )}
+
             <br />
-            <h6 className="text-secondary" >{title}</h6>
+            <div className={`${styles.container} mb-3`}>
+                <div>
+                    <h6 className="text-secondary fw-bold">{title}</h6>
+                </div>
+                <div>
+                    <div>
+                        <ButtonGroup>
+                            {/* <Button size="sm" variant="outline-dark">
+                                Export Record
+                            </Button> */}
+                            <ExportButton
+                                data={records}
+                                fileName={title}
+                                sheetName="Records"
+                                buttonName="Export Records"
+                            />
+                            <Button
+                                size="sm"
+                                variant="outline-primary"
+                                onClick={addRecord}
+                            >
+                                New Record
+                            </Button>
+                        </ButtonGroup>
+                    </div>
+                </div>
+            </div>
             <RecordTable data={records} setData={setRecords} />
         </>
     );

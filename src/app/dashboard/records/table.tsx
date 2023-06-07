@@ -45,7 +45,7 @@ export default function RecordTable({ data, setData }: Props) {
                 badgeNumber: record.officer.badgeNumber,
                 timeIn: timein !== "Invalid Date" ? timein : "N/A",
                 timeOut: timeOut !== "Invalid Date" ? timeOut : "N/A",
-                date: date ? timein : "N/A",
+                date: date ? date : "N/A",
                 status: statusContainer,
             };
         });

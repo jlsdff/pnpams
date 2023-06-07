@@ -18,8 +18,43 @@
 .tableFixHead th {
     position: sticky;
     top: 0;
+    z-index: 100;
     background: hsl(0, 0%, 100%);
 }
-.tableFixHead tbody tr{
+.tableFixHead tbody tr {
     position: inherit;
- }
+}
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.modalContent {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1050;
+    width: 80vw;
+    height: 80vh;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+.displayContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+.modal .closeButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
